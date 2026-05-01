@@ -1,0 +1,4 @@
+interface:
+  display_name: "Code Review"
+  short_description: "Review branch changes one issue at a time"
+  default_prompt: "Use $code-review to review the current branch one finding at a time."

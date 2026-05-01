@@ -1,0 +1,4 @@
+interface:
+  display_name: "Merge Conflict"
+  short_description: "Resolve merge conflicts interactively"
+  default_prompt: "Use $merge-conflict to resolve the current merge conflict interactively."

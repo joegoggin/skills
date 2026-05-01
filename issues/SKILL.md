@@ -1,16 +1,24 @@
 ---
 name: issues
-description: Create issues in GitHub project.
+description: Create, update, plan, and implement GitHub issues for a repository project. Use when Codex is asked to create GitHub issues, break work into sub-issues, implement an issue, write issue implementation instructions, or sync local issue plans with GitHub.
 ---
 
 # Issues
 
 ## Project
 
-The GitHub project associated with the repo should be defined in the
-`AGENTS.md`. All created issues should be added to this project. If 
-the project isn't defined DO NOT create an issues and inform the me 
-that there is no project defined.
+Before creating or updating issues, read the repo's `AGENTS.md` and locate the
+GitHub project for the repo. Treat the project as defined only when `AGENTS.md`
+provides a GitHub Project URL or enough owner/project information to identify
+it. All created issues should be added to this project.
+
+If the project is missing or ambiguous, DO NOT create issues. Inform the user
+that no GitHub project is clearly defined and ask them to add or clarify it in
+`AGENTS.md`.
+
+If the GitHub project is defined but the available tools cannot add issues to
+that project, DO NOT create issues unless the user explicitly approves creating
+them without project linkage.
 
 ### Labels
 
@@ -30,23 +38,23 @@ that there is no project defined.
 
 ### Priority
 
-- Low 
+- Low
 - Medium
 - High
 - Urgent
 
 ## Create Issues
 
-Use `resources/create.md` for creating issues
+Use `references/create.md` for creating issues.
 
-## Implementing Issues 
+## Implementing Issues
 
-Use `resources/implement.md` for create issues
+Use `references/implement.md` for implementing issues.
 
-## Providing Instruction For Issues
+## Providing Instructions For Issues
 
-Use `resources/instructions.md` for providing instructions for issues
+Use `references/instructions.md` for providing instructions for issues.
 
 ## Updating Issues
 
-Use `resources/update.md` for updating issues
+Use `references/update.md` for updating issues.
