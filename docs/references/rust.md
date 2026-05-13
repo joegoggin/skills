@@ -94,6 +94,64 @@ skip `# Arguments` for zero-parameter methods, etc.):
 pub async fn send_email(&self, to: &str, subject: &str, body: &str) -> ApiResult<()> {
 ```
 
+## Test Function Docs
+
+Use `///` rustdoc comments on every `#[test]` function. Place the rustdoc
+block immediately above `#[test]`.
+
+Use this structure:
+
+1. **Summary line** — starts with `Verifies` and describes the behavior under
+   test.
+2. **`# Example Under Test`** — shows the concrete inputs, fixtures, commands,
+   paths, config snippets, or setup being exercised.
+3. **`# Assertions`** — lists each meaningful assertion the test makes,
+   including parse or load success when an `unwrap` is part of the behavior
+   being proven.
+4. **`# Why`** — optional; include only for non-obvious regression intent,
+   precedence rules, accumulated errors, user-facing contracts, or other
+   behavior that future readers may not infer from the test name.
+
+Use fenced code blocks in examples:
+
+- `toml` for TOML config snippets.
+- `text` for CLI commands, paths, stdout/stderr snippets, and non-language
+  examples.
+
+Test docs must describe only the current assertions and behavior in the test.
+Do not mention removed assertions, obsolete product names, or behavior the test
+does not currently check.
+
+````rust
+/// Verifies CLI validation diagnostics include config field names.
+///
+/// # Example Under Test
+///
+/// ```toml
+/// [services.api]
+/// command = []
+/// ```
+///
+/// ```text
+/// goggin-rs-process-watch run --config bad.toml
+/// ```
+///
+/// # Assertions
+///
+/// - The command exits with failure.
+/// - Standard error contains `invalid config:`.
+/// - Standard error contains `services.api.command`.
+///
+/// # Why
+///
+/// Empty command arrays should be reported with the full user-facing config
+/// field path.
+#[test]
+fn run_reports_validation_field_names() {
+    // Test body omitted.
+}
+````
+
 ## Handler/Controller Methods
 
 Include the HTTP method and route path in the extended description:
