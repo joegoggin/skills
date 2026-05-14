@@ -42,3 +42,4 @@ find ~/.agents/skills -maxdepth 2 -name SKILL.md
 | `$docs` | Applies repository documentation conventions. | `docs/references/rust.md`, `docs/agents/openai.yaml` |
 | `$issues` | Creates, plans, updates, and implements GitHub issue workflows. | `issues/references/`, `issues/agents/openai.yaml` |
 | `$merge-conflict` | Resolves Git merge conflicts interactively one conflict at a time. | `merge-conflict/agents/openai.yaml` |
+| `$plan-project` | Plans new projects as phased GitHub issues without implementing the project. | `plan-project/agents/openai.yaml` |
