@@ -1,0 +1,4 @@
+interface:
+  display_name: "Create Repo"
+  short_description: "Create GitHub repos with labels and project setup"
+  default_prompt: "Use $create-repo to create and configure a GitHub repository for this project."
