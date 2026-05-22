@@ -11,6 +11,14 @@ When asked to update issue plans, do the following:
     - Variable name changes.
 - Compare the updated `issue-*.md` to the existing GitHub issue to ensure they still
   match each other.
+- When updating or syncing issue bodies, normalize main issues and sub-issues to
+  the structures defined in `references/create.md`.
+  - Main issues should include goal, optional dependencies, ordered sub-issue
+    issue-number references, and manual tests.
+  - Sub-issues should include goal, summary, optional examples, optional
+    third-party packages, optional references, checklist steps, and manual
+    tests.
+  - Preserve useful existing content by moving it into the matching section.
 - Update the GitHub issue only when the local plan and remote issue are out of
   sync.
 - DO NOT implement the plan.

@@ -13,6 +13,14 @@ following:
   - DO NOT include multiple issues in one file.
   - If a matching file already exists for an issue, leave it unchanged and tell
     the user that instructions already exist for that issue.
-- Include detailed code examples for each step.
-- Include steps for manually testing the changes.
+- For sub-issue instruction files, align the plan with the sub-issue structure
+  in `references/create.md`: goal, summary, optional contextual examples,
+  optional third-party packages, optional references, checklist steps, and
+  manual tests.
+- Include code examples only when they add useful context. Keep them short and
+  avoid full implementation examples.
+- Split implementation work into `- [ ]` checklist steps, with each top-level
+  item limited to one small task. Use indented task-list sub-steps only when a
+  step needs more detail.
+- Include manual testing instructions and a `- [ ]` checklist of tests.
 - DO NOT implement the plan.

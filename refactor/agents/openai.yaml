@@ -1,0 +1,4 @@
+interface:
+  display_name: "Refactor"
+  short_description: "Suggest refactors one at a time"
+  default_prompt: "Use $refactor to suggest current-branch refactors one at a time."
