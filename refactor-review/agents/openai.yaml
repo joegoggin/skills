@@ -1,0 +1,4 @@
+interface:
+  display_name: "Refactor Review"
+  short_description: "Suggest refactors one at a time"
+  default_prompt: "Use $refactor-review to suggest current-branch refactors one at a time."

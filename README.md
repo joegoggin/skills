@@ -43,4 +43,4 @@ find ~/.agents/skills -maxdepth 2 -name SKILL.md
 | `$issues` | Creates, plans, updates, and implements GitHub issue workflows. | `issues/references/`, `issues/agents/openai.yaml` |
 | `$merge-conflict` | Resolves Git merge conflicts interactively one conflict at a time. | `merge-conflict/agents/openai.yaml` |
 | `$plan-project` | Plans new projects as phased GitHub issues without implementing the project. | `plan-project/agents/openai.yaml` |
-| `$refactor` | Suggests behavior-preserving refactors one at a time with affected files, code examples, and file tree changes when needed. | `refactor/agents/openai.yaml` |
+| `$refactor-review` | Suggests behavior-preserving refactors one at a time with affected files, code examples, and file tree changes when needed. | `refactor-review/agents/openai.yaml` |

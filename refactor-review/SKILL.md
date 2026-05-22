@@ -1,9 +1,9 @@
 ---
-name: refactor
+name: refactor-review
 description: Suggest current-branch refactors for maintainability, readability, duplication reduction, architecture fit, naming, dead code removal, and testability. Use when Codex is asked to refactor, improve structure, simplify code, reduce duplication, or propose cleanup changes, and should present proposed refactors interactively one at a time.
 ---
 
-# Refactor
+# Refactor Review
 
 ## What to Inspect
 
