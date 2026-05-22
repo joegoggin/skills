@@ -1,4 +1,4 @@
 interface:
   display_name: "Debug"
   short_description: "Diagnose bugs and propose fixes"
-  default_prompt: "Use $debug to diagnose this issue, propose a diff, and ask before applying it."
+  default_prompt: "Use $debug to diagnose this issue with Error, Cause, Resources, and Proposed fix sections, then ask before applying it."

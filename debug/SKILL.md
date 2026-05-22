@@ -25,8 +25,9 @@ user accepts the proposed fix.
 4. **Find the root cause** - Explain the smallest code path or configuration
    choice that accounts for the symptom, diagnostic, or both. Do not propose a
    change that only silences the visible error unless it addresses the cause.
-5. **Propose one fix** - Show the minimal fix as a diff and include the focused
-   verification command that should pass after applying it.
+5. **Propose one fix** - Use the diagnosis response format below, show the
+   minimal fix as a diff, and include the focused verification command that
+   should pass after applying it.
 6. **Ask before mutating** - Ask the user whether to apply the diff. Wait for
    confirmation before editing files or running formatters that rewrite files.
 7. **Apply and verify if accepted** - Make the accepted change, run focused
@@ -45,21 +46,41 @@ user accepts the proposed fix.
   both the observed behavior and the machine output. If they appear unrelated,
   say so and handle the higher-confidence issue first.
 
-## Proposed Fix Format
+## Diagnosis Response Format
 
-Present each proposed fix like this:
+Use this structure for the root-cause and proposed-diff response before editing
+files. Follow-up reports after an accepted fix may be concise.
 
 ```markdown
-**Root cause:** [brief explanation tied to inspected evidence]
+# Error
 
-**Proposed fix:**
+[Describe the issue being debugged. If logs or diagnostics were provided,
+pretty-print the relevant error message in a fenced code block.]
+
+Affected files:
+- `path/to/file.ext`
+
+# Cause
+
+[Explain exactly what caused the error. Include file names, exact line numbers,
+and short code snippets from the inspected code where the error is caused.]
+
+# Resources
+
+[Link to relevant documentation or additional information when useful. Use
+`None needed.` for simple spelling, syntax, missing semicolon, or similarly
+obvious issues.]
+
+# Proposed fix
+
+[Introduce the minimal fix.]
 
 \`\`\`diff
 - old code
 + new code
 \`\`\`
 
-**Verify with:** `command`
+Verify with: `command`
 
 Do you want me to apply this fix?
 ```
