@@ -55,15 +55,23 @@ Provide short code, JSON, command, or UI examples when they add context.
 
 ### Step 1
 
+#### Description
+
 Complete one small task.
 
-Add concise implementation details here.
+#### file: `src/example.rs`
+
+Include the code diff or snippet needed for this file.
 
 ### Step 2
 
+#### Description
+
 Complete another small task.
 
-Add concise implementation details here.
+#### file: `src/another-example.rs`
+
+Include the code diff or snippet needed for this file.
 
 ## Tests
 
@@ -83,11 +91,17 @@ Describe how to verify the implementation.
   exact format: `- [ ] Step N - Short imperative task.`
 - Add one matching `### Step N` section for every progress checkbox.
 - Keep each numbered step focused on one small task.
-- Use the numbered step sections for details, file paths, commands, concise
-  examples, and important scope exclusions.
-- Include code examples only when they add useful context. Keep them short and
-  avoid full implementation examples unless the issue specifically needs an
-  exact shape or contract.
+- In every `### Step N` section, add a blank line after the heading, then add
+  `#### Description`.
+- In each `#### Description` subsection, describe exactly what to do in that
+  step, including relevant commands and important scope exclusions when needed.
+- After the description, add one ``#### file: `path/to/file` `` subsection for
+  each file that needs an add or change in that step.
+- Under each ``#### file: `path/to/file` `` subsection, include the code diff or
+  code snippet needed to complete that file change.
+- Include all code needed to complete the step. Do not include full files unless
+  the full file is genuinely needed; include only the surrounding context needed
+  to make the add or change safely.
 - Keep follow-up work out of the issue instructions when the source issue or
   parent issue assigns that work to separate issues.
 - In `## Tests`, include a brief verification summary plus a `- [ ]` checklist
