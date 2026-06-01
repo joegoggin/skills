@@ -75,10 +75,19 @@ Include the code diff or snippet needed for this file.
 
 ## Tests
 
-Describe how to verify the implementation.
+Verify the implementation with a brief summary of the relevant automated and
+manual checks.
 
-- [ ] Run the relevant automated check.
+- [ ] Run `just test`.
+- [ ] Run `just lint`.
 - [ ] Verify one expected behavior manually.
+
+### Useful commands
+
+```sh
+just test
+just lint
+```
 ```
 
 - Always include `## Goal`, `## Summary`, `## Steps`, and `## Tests`.
@@ -105,5 +114,18 @@ Describe how to verify the implementation.
 - Keep follow-up work out of the issue instructions when the source issue or
   parent issue assigns that work to separate issues.
 - In `## Tests`, include a brief verification summary plus a `- [ ]` checklist
-  of automated and manual tests. Add useful command examples after the checklist
-  when relevant.
+  of automated and manual tests.
+- After the test checklist, include `### Useful commands` with a fenced `sh`
+  block when one or more checklist items have stable commands.
+- In `### Useful commands`, include only commands that directly correspond to
+  checklist items, and list them in the same order as the matching checklist
+  items.
+- When a useful command uses `rg`, make the matching checklist item start with
+  `Confirm` and include the meaningful searched terms from the `rg` pattern in
+  human-readable form. For example:
+  - Checklist: `- [ ] Confirm \`crates/leptatui/src/prelude.rs\` still does not contain \`pub use leptos::prelude::*\`, \`pub use ratatui::*\`, or \`pub use crossterm::*\`.`
+  - Command: `rg "pub use (leptos::prelude|ratatui|crossterm)::\\*" crates/leptatui/src`
+  - Checklist: `- [ ] Confirm no \`Component\`, \`RenderCtx\`, node builder, \`TuiStyle\`, or counter example was added in this issue.`
+  - Command: `rg "Component|RenderCtx|TuiStyle|counter" crates/leptatui/src crates/leptatui/examples`
+- Do not add commands for descriptive/manual checklist items or checks that
+  require temporary code changes instead of a stable reusable command.
