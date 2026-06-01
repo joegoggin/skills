@@ -16,8 +16,8 @@ When asked to update issue plans, do the following:
   - Main issues should include goal, optional dependencies, ordered sub-issue
     issue-number references, and manual tests.
   - Sub-issues should include goal, summary, optional examples, optional
-    third-party packages, optional references, checklist steps, and manual
-    tests.
+    third-party packages, optional references, instruction-style steps, and
+    instruction-style tests.
   - Preserve useful existing content by moving it into the matching section.
 - Update the GitHub issue only when the local plan and remote issue are out of
   sync.
