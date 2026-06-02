@@ -15,6 +15,7 @@ Documentation conventions may differ by language. Check the `references`
 directory and load only the file that matches the language being documented.
 
 - Rust: `references/rust.md`
+- Lua: `references/lua.md`
 
 ## What to Ignore
 
