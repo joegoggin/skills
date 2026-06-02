@@ -1,4 +1,4 @@
 interface:
   display_name: "Documentation"
   short_description: "Apply project documentation conventions"
-  default_prompt: "Use $docs to apply this repository's documentation conventions."
+  default_prompt: "Use $docs to add missing documentation and update stale docs in this repository."
