@@ -1,6 +1,6 @@
 ---
 name: plan-project
-description: Plan a new software project from a user-provided idea prompt, turn the implementation plan into ordered phases, and create GitHub issues for the plan without implementing the project. Use when Codex is asked to create GitHub issues for a new project plan, convert a project idea into phased implementation issues, or create phase issues with linked step sub-issues using the issues skill. Do not use to implement code, create app files, run migrations, or start building the planned project.
+description: Plan a new software project from a user-provided idea prompt, turn the implementation plan into ordered phases, and create GitHub issues for the plan without implementing the project. Use when Codex is asked to create GitHub issues for a new project plan, convert a project idea into phased implementation issues, or create phase issues with compactly named linked sub-issues using the issues skill. Do not use to implement code, create app files, run migrations, or start building the planned project.
 ---
 
 # Plan Project
@@ -23,8 +23,9 @@ If the user asks to plan and implement in the same request, use this skill only 
 2. Clarify only high-impact unknowns that materially affect architecture, scope, platform, data ownership, or delivery order.
 3. Draft a phased implementation plan before creating issues.
 4. Convert each phase into a main issue.
-5. Convert each ordered phase step into a linked sub-issue under that phase.
-6. Ensure each phase issue description lists all of its step sub-issues.
+5. Convert each ordered phase step into a compactly named linked sub-issue under
+   that phase.
+6. Ensure each phase issue description lists all of its sub-issues.
 7. Use `$issues` to create the GitHub issues, treating each phase issue as the
    main issue for that phase.
 8. Stop after summarizing the created issues. Do not begin implementing any phase or sub-issue.
@@ -58,7 +59,10 @@ For each phase:
 - Create one main phase issue summarizing the phase goal, scope, dependencies, acceptance criteria, label, and priority.
 - Create one linked sub-issue for each implementation step.
 - Do not create a separate project-wide parent issue unless the user explicitly asks for one.
-- Keep sub-issues small enough to implement independently, with checklist steps and phase context.
+- Title each phase sub-issue as `P{phase_number}S{step_number}: {short task
+  title}`, for example `P3S1: Add nested render tree support`.
+- Keep sub-issues small enough to implement independently, with phase context
+  and a clear expected result.
 - Order sub-issues in the sequence they should be implemented.
 - After sub-issues exist, ensure the phase issue description lists every sub-issue with links or issue numbers.
 
@@ -69,6 +73,6 @@ If GitHub sub-issue relationships are unavailable through the current tools, fol
 After issue creation, summarize:
 
 - The phase issues created.
-- The linked step sub-issues created for each phase.
+- The linked sub-issues created for each phase.
 - Any project-linkage or sub-issue relationship limitations encountered.
 - That no implementation work was performed.

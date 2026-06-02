@@ -1,29 +1,26 @@
 # Updating Issues
 
-When asked to update issue plans, do the following:
+When asked to update or sync GitHub issue bodies, do the following:
 
 - Review recent changes for context.
+- Do not edit, create, normalize, or rewrite local `issues/issue-*.md` files
+  unless the user explicitly asks to update local instruction files.
 - Treat `issues/issue-<number>.md` files that start with `## Changes` as
   implementation records, not issue plans or issue-body drafts.
 - Use implementation records only as context when checking whether plans or
   GitHub issues are stale. Do not normalize implementation records or sync them
   to GitHub issue bodies.
-- Compare them to existing `issue-*.md` files and address any inconsistencies
-  caused by the changes if needed.
-  - What to look for:
-    - Project structure changes.
-    - Code style or convention changes.
-    - Variable name changes.
-- Compare the updated `issue-*.md` to the existing GitHub issue to ensure they still
-  match each other.
-- When updating or syncing issue bodies, normalize main issues and sub-issues to
+- Read local `issues/issue-*.md` files only as context when they are directly
+  relevant to the requested GitHub issue update.
+- When updating or syncing GitHub issue bodies, normalize main issues and sub-issues to
   the structures defined in `references/create.md`.
   - Main issues should include goal, optional dependencies, ordered sub-issue
     issue-number references, and manual tests.
   - Sub-issues should include goal, summary, optional examples, optional
-    third-party packages, optional references, instruction-style steps, and
-    instruction-style tests.
+    third-party packages, optional references, expected result, and tests.
   - Preserve useful existing content by moving it into the matching section.
-- Update the GitHub issue only when the local plan and remote issue are out of
-  sync.
+  - When an existing sub-issue has `## Steps`, convert useful step content into
+    done-state expectations under `## Expected Result` instead of preserving the
+    step checklist structure.
+- Update the GitHub issue only when the remote issue body is out of sync.
 - DO NOT implement the plan.

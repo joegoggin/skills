@@ -22,7 +22,8 @@ conventions:
 - Give each sub-issue a summary of the small task and the same priority as the
   main issue.
 - Order sub-issues in the sequence they should be implemented.
-- Split sub-issues into smaller checklist steps.
+- Define the expected result for each sub-issue instead of adding implementation
+  step checklists.
 - Assign all issues to the authenticated GitHub user. If the user cannot be
   determined, ask who should be assigned.
 
@@ -69,6 +70,15 @@ Describe the main goal for the sub-issue.
 
 Summarize the task.
 
+## Expected Result
+
+Describe the completed state in enough detail that the implementer can
+recognize what done means. Include expected behavior, outputs, UI states, data
+shape, commands, or scope exclusions when they clarify the result.
+
+Example: Running `just test` succeeds, and nested render tree nodes preserve
+their parent-child ordering in the rendered output.
+
 ## Examples
 
 Provide short code, JSON, command, or UI examples when they add context.
@@ -81,26 +91,6 @@ Provide short code, JSON, command, or UI examples when they add context.
 ## References
 
 - [Resource title](https://example.com)
-
-## Steps
-
-### Progress
-
-- [ ] Step 1 - Complete one small task.
-- [ ] Step 2 - Complete another small task.
-
-### Step 1
-
-#### Description
-
-Complete one small task. Include relevant commands and important scope
-exclusions when needed.
-
-### Step 2
-
-#### Description
-
-Complete another small task.
 
 ## Tests
 
@@ -119,19 +109,20 @@ just test
 
 - Omit `## Examples`, `## 3rd-party packages`, and `## References` when they
   are not relevant.
+- Keep the top-level sub-issue section order exactly as shown when optional
+  sections are present.
 - Keep examples short and contextual. Include code examples only when they are
   needed for clarification. Do not provide full implementation examples.
 - In `## 3rd-party packages`, include the package name, link, brief
   description, and what it is used for.
-- In `## Steps`, always include `### Progress` first.
-- In `### Progress`, use one checkbox per top-level implementation step in this
-  exact format: `- [ ] Step N - Short imperative task.`
-- Add one matching `### Step N` section for every progress checkbox.
-- Keep each numbered step focused on one small task.
-- In every `### Step N` section, add a blank line after the heading, then add
-  `#### Description`.
-- In each `#### Description` subsection, describe exactly what to do in that
-  step, including relevant commands and important scope exclusions when needed.
+- Always include `## Expected Result`.
+- In `## Expected Result`, describe the done state in detail. Include expected
+  behavior, outputs, UI states, data shape, commands, and scope exclusions when
+  they help define what correct completion looks like.
+- Include short examples in `## Expected Result` when they clarify the expected
+  done state. Do not provide full implementation examples.
+- Do not include implementation progress checklists or numbered step sections
+  in sub-issue bodies.
 - Do not require per-file code or diff subsections in sub-issue bodies. If code
   is needed for clarification, include a short contextual example in
   `## Examples`.

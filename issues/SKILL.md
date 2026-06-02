@@ -1,6 +1,6 @@
 ---
 name: issues
-description: Create, update, plan, and implement GitHub issues for a repository project. Use when Codex is asked to create GitHub issues, break work into sub-issues, implement an issue, write issue implementation instructions, or sync local issue plans with GitHub.
+description: Create, update, plan, and implement GitHub issues for a repository project. Use when Codex is asked to create GitHub issues, break work into sub-issues, implement an issue, write issue implementation instructions, or sync/update GitHub issue bodies.
 ---
 
 # Issues
