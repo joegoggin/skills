@@ -442,13 +442,9 @@ def validate_project_view_fields(project_id: str) -> None:
     fields = views[0].get("fields", {}).get("nodes", [])
     actual = {field.get("name") for field in fields if field.get("name")}
     missing = sorted(REQUIRED_PROJECT_VIEW_FIELDS - actual)
-    unexpected = sorted(actual - REQUIRED_PROJECT_VIEW_FIELDS)
-    if missing or unexpected:
+    if missing:
         message = "GitHub Project default view does not match expected fields."
-        if missing:
-            message += f" Missing: {missing}."
-        if unexpected:
-            message += f" Unexpected: {unexpected}."
+        message += f" Missing: {missing}."
         raise CreateRepoError(message)
 
 

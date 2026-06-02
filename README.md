@@ -39,7 +39,7 @@ find ~/.agents/skills -maxdepth 2 -name SKILL.md
 | `$code-review` | Reviews branch, PR, diff, or local changes one issue at a time. | `code-review/agents/openai.yaml` |
 | `$create-repo` | Creates and bootstraps GitHub repos with labels, a linked private project, `AGENTS.md`, and an initial push. | `create-repo/scripts/create_repo.py`, `create-repo/agents/openai.yaml` |
 | `$debug` | Diagnoses bugs from symptoms, diagnostics, logs, or both, then proposes a diff before applying fixes. | `debug/agents/openai.yaml` |
-| `$docs` | Applies repository documentation conventions. | `docs/references/rust.md`, `docs/agents/openai.yaml` |
+| `$docs` | Applies repository documentation conventions. | `docs/references/rust.md`, `docs/references/lua.md`, `docs/agents/openai.yaml` |
 | `$issues` | Creates, plans, updates, and implements GitHub issue workflows. | `issues/references/`, `issues/agents/openai.yaml` |
 | `$merge-conflict` | Resolves Git merge conflicts interactively one conflict at a time. | `merge-conflict/agents/openai.yaml` |
 | `$plan-project` | Plans new projects as phased GitHub issues without implementing the project. | `plan-project/agents/openai.yaml` |

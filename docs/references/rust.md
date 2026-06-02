@@ -3,6 +3,17 @@
 All public and private items must have rustdoc comments following these
 conventions.
 
+## Contents
+
+- Module-level docs
+- Item docs
+- Enum variant docs
+- Function and method docs
+- Test function docs
+- Handler/controller methods
+- Cross-references
+- Formatting rules
+
 ## Module-Level Docs
 
 Use `//!` comments at the top of the file. Start with a one-line summary,

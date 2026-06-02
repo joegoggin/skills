@@ -3,6 +3,14 @@
 When creating issues on GitHub for this project you should use the following
 conventions:
 
+## Contents
+
+- Creation conventions
+- Main issue body
+- Sub-issue body
+
+## Creation Conventions
+
 - Give all new issues a status of `Todo`.
 - If a priority is not provided, set the priority to `Medium` by default.
 - Create a main issue with a summary of the full task that needs to be completed.

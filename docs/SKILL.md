@@ -8,14 +8,19 @@ description: Apply repository documentation conventions. Use when Codex is addin
 ## Default Invocation
 
 When the user provides only `$docs` with no additional input, inspect the
-current repository for missing or stale documentation. Add missing documentation
-and update stale documentation only for languages with configured conventions.
+current repository for missing or stale documentation. Report findings and do
+not edit files unless the user explicitly asks to add or update documentation.
 
 Documentation conventions may differ by language. Check the `references`
 directory and load only the file that matches the language being documented.
 
 - Rust: `references/rust.md`
 - Lua: `references/lua.md`
+
+## Editing Documentation
+
+When the user asks to add, edit, refresh, or apply documentation fixes, modify
+documentation only for languages with configured conventions.
 
 ## What to Ignore
 

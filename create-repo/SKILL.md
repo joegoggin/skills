@@ -16,10 +16,11 @@ Use the bundled script for the full workflow. It is designed to fail before repl
 1. Confirm repository visibility before creating anything.
    - If the user specifies public or private, pass `--public` or `--private`.
    - If the user does not specify visibility, ask whether the repo should be public or private.
-2. Run the script from the project root:
+2. Run the bundled script from the project root, resolving the script path from
+   this skill directory:
 
 ```bash
-python3 /home/joegoggin/.agents/skills/create-repo/scripts/create_repo.py --private
+python3 <create-repo-skill-dir>/scripts/create_repo.py --private
 ```
 
 Use `--public` instead when requested. Use `--owner OWNER` only when the user explicitly asks to create the repo under a specific user or organization.
@@ -64,14 +65,15 @@ If a previous run partially completed, rerun only after confirming the existing 
   - If the repo has no commits, stage all files, commit `Initial commit`, and push the active branch to `origin`.
   - If the repo already has commits, require a clean worktree, commit the generated `AGENTS.md` project-link change when needed, then push the active branch to `origin`.
 
-Project view field order is intentionally ignored.
+Project view field order and additional visible fields are intentionally
+ignored. Validation should only fail when required fields are missing.
 
 ## Validation and Safety
 
 Use dry-run mode before live creation when the target directory or owner is uncertain:
 
 ```bash
-python3 /home/joegoggin/.agents/skills/create-repo/scripts/create_repo.py --dry-run --private
+python3 <create-repo-skill-dir>/scripts/create_repo.py --dry-run --private
 ```
 
 If the script fails, report the failed step and do not retry destructive steps manually. Never replace an existing `origin` remote unless the user explicitly asks for that separate operation.

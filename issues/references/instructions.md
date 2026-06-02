@@ -3,6 +3,13 @@
 When asked to provide instructions for implementing an issue, do the
 following:
 
+## Contents
+
+- Instruction workflow
+- Instruction file format
+
+## Instruction Workflow
+
 - Read the issue for context.
   - If the issue is a sub-issue, read the main issue for context.
 - Create a plan to implement the issue.

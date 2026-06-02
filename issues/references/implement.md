@@ -2,14 +2,27 @@
 
 When asked to implement an issue, do the following:
 
+## Contents
+
+- Implementation workflow
+- Implementation record format
+
+## Implementation Workflow
+
 - Read the issue for context.
   - If the issue is a sub-issue, read the main issue for context.
+- If `issues/issue-<number>.md` exists and does not start with `## Changes`,
+  read it before implementing and follow its instructions.
+- If `issues/issue-<number>.md` exists and starts with `## Changes`, treat it as
+  an existing implementation record, not an instruction plan. Leave it unchanged
+  unless the user explicitly asks to update it.
 - Update the status of the issue to `In Progress`.
 - Implement the task.
-- If `issues/issue-<number>.md` does not exist for the implemented issue,
-  create it after implementation using the implementation record format below.
-  If the file already exists, leave it unchanged unless the user explicitly
-  asks to update it.
+- If an instruction file exists, update only the relevant checkboxes in its
+  `### Progress` sections as steps are completed. Preserve the existing file
+  structure and do not rewrite it into the implementation record format.
+- If `issues/issue-<number>.md` does not exist, create it after implementation
+  using the implementation record format below.
 - Run relevant checks or tests when possible.
 - Leave the issue status as `In Progress` after implementation. The user will
   manually move the issue to `Done` after review.

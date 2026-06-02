@@ -3,6 +3,15 @@
 All public and private Lua modules, helpers, methods, and tests should use
 EmmyLua-style documentation comments following these conventions.
 
+## Contents
+
+- Module-level docs
+- Function and method docs
+- Type annotations
+- Local tables and constants
+- Test docs
+- Formatting rules
+
 ## Module-Level Docs
 
 Use `---` comments at the top of each Lua file. Start with a concise summary,

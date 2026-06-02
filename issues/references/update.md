@@ -3,6 +3,11 @@
 When asked to update issue plans, do the following:
 
 - Review recent changes for context.
+- Treat `issues/issue-<number>.md` files that start with `## Changes` as
+  implementation records, not issue plans or issue-body drafts.
+- Use implementation records only as context when checking whether plans or
+  GitHub issues are stale. Do not normalize implementation records or sync them
+  to GitHub issue bodies.
 - Compare them to existing `issue-*.md` files and address any inconsistencies
   caused by the changes if needed.
   - What to look for:
