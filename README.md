@@ -44,3 +44,4 @@ find ~/.agents/skills -maxdepth 2 -name SKILL.md
 | `$merge-conflict` | Resolves Git merge conflicts interactively one conflict at a time. | `merge-conflict/agents/openai.yaml` |
 | `$plan-project` | Plans new projects as phased GitHub issues without implementing the project. | `plan-project/agents/openai.yaml` |
 | `$refactor-review` | Suggests behavior-preserving refactors one at a time with affected files, code examples, and file tree changes when needed. | `refactor-review/agents/openai.yaml` |
+| `$skill-review` | Reviews skill changes for trigger quality, structure, resources, validation, and metadata one issue at a time. | `skill-review/agents/openai.yaml` |
