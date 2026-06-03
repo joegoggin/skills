@@ -1,0 +1,4 @@
+interface:
+  display_name: "Skill Review"
+  short_description: "Review skills for quality issues"
+  default_prompt: "Use $skill-review to review the current skill changes."
