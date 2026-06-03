@@ -1,6 +1,6 @@
 ---
 name: issues
-description: Create, update, plan, and implement GitHub issues for a repository project. Use when Codex is asked to create GitHub issues, break work into sub-issues, implement an issue, write issue implementation instructions, or sync/update GitHub issue bodies.
+description: Create, update, plan, and implement GitHub issues for a repository project. Use when Codex is asked to create GitHub issues, break work into sub-issues, implement an issue or one step from an issue instruction file such as `$issues #18 step 6`, write issue implementation instructions, or sync/update GitHub issue bodies.
 ---
 
 # Issues
@@ -50,6 +50,11 @@ Use `references/create.md` for creating issues.
 ## Implementing Issues
 
 Use `references/implement.md` for implementing issues.
+
+## Implementing Instruction Steps
+
+Use `references/implement.md` when asked to implement one numbered step from an
+issue instruction file, such as `$issues #18 step 6`.
 
 ## Providing Instructions For Issues
 
