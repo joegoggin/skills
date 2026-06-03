@@ -107,7 +107,7 @@ Explain what the function does.
 
 ```rust
 fn function_name(arg: Type) {
-    // Focused implemented code snippet.
+    // Full implemented function body when concise.
 }
 ```
 
@@ -132,8 +132,23 @@ Explain why this test matters for the issue.
 ```rust
 #[test]
 fn test_name() {
-    // Focused implemented test snippet.
+    // Full implemented test body when concise.
 }
+```
+
+## Tests
+
+Record the verification performed and any checks intentionally skipped.
+
+- `<test command>` - Passed.
+- `<lint command>` - Passed.
+- Manual: Verified one expected behavior.
+
+### Useful commands
+
+```sh
+<test command>
+<lint command>
 ```
 `````
 
@@ -166,10 +181,21 @@ fn test_name() {
 - For each important function, method, type, constant, or other symbol, include:
   a heading with the symbol name, a source line formatted like
   `Source line: path/to/file.rs:12`, a short explanation, relevant parameters
-  or fields, and a focused code block showing the implemented code.
+  or fields, and a code block showing the full implemented function or method
+  body when concise. For long bodies, include the complete signature and focused
+  excerpts of the changed or review-relevant logic with source line references.
 - For test files, use `##### New Tests` or `##### Modified Tests` when tests
   changed. For each important test, include the test name, source line,
-  `###### Assertions`, `###### Why`, and a focused code block.
+  `###### Assertions`, `###### Why`, and a code block showing the full test
+  function body when concise. For long fixture-heavy or table-driven tests,
+  include the setup and assertions needed to understand the behavior.
+- In `## Tests`, include a brief verification summary plus result bullets for
+  automated and manual checks. For checks that were not run, write `Not run`
+  with the reason instead of leaving unchecked todo items.
+- After the verification list, include `### Useful commands` with a fenced `sh`
+  block when one or more command-backed verification items have stable commands.
+- In `### Useful commands`, include only commands that directly correspond to
+  command-backed verification items, and list them in the same order.
 - For non-code files, generated files, lockfiles, dependency metadata, and
   deleted files, use a shorter prose summary and omit symbol-level detail unless
   it is useful for review.
