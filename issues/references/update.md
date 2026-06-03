@@ -5,8 +5,9 @@ When asked to update or sync GitHub issue bodies, do the following:
 - Review recent changes for context.
 - Do not edit, create, normalize, or rewrite local `issues/issue-*.md` files
   unless the user explicitly asks to update local instruction files.
-- Treat `issues/issue-<number>.md` files that start with `## Changes` as
-  implementation records, not issue plans or issue-body drafts.
+- Treat `issues/issue-<number>.md` files as implementation records, not issue
+  plans or issue-body drafts, when their first content after an optional leading
+  `# {issue title}` heading is `## Changes`.
 - Use implementation records only as context when checking whether plans or
   GitHub issues are stale. Do not normalize implementation records or sync them
   to GitHub issue bodies.

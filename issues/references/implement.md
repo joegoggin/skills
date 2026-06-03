@@ -20,8 +20,10 @@ workflow instead of the full issue implementation workflow:
   explicitly instructs you to read them.
 - If `issues/issue-<number>.md` is missing, stop and report that the instruction
   file is missing.
-- If `issues/issue-<number>.md` starts with `## Changes`, stop and report that
-  it is an implementation record, not an instruction file.
+- If `issues/issue-<number>.md` is an implementation record, stop and report
+  that it is not an instruction file. Treat the file as an implementation
+  record when its first content after an optional leading `# {issue title}`
+  heading is `## Changes`.
 - Locate exactly one `### Step <number>` section and exactly one matching
   checkbox in `### Progress`.
 - If the selected step section or matching progress checkbox is missing or
@@ -42,11 +44,12 @@ workflow instead of the full issue implementation workflow:
 
 - Read the issue for context.
   - If the issue is a sub-issue, read the main issue for context.
-- If `issues/issue-<number>.md` exists and does not start with `## Changes`,
+- If `issues/issue-<number>.md` exists and is not an implementation record,
   read it before implementing and follow its instructions.
-- If `issues/issue-<number>.md` exists and starts with `## Changes`, treat it as
-  an existing implementation record, not an instruction plan. Leave it unchanged
-  unless the user explicitly asks to update it.
+- If `issues/issue-<number>.md` exists and is an implementation record, leave it
+  unchanged unless the user explicitly asks to update it. Treat the file as an
+  implementation record when its first content after an optional leading
+  `# {issue title}` heading is `## Changes`.
 - Update the status of the issue to `In Progress`.
 - Implement the task.
 - If an instruction file exists, update only the relevant checkboxes in its
@@ -62,12 +65,15 @@ workflow instead of the full issue implementation workflow:
 ## Implementation record format
 
 Create missing implementation records as `issues/issue-<number>.md`, where
-`<number>` is the GitHub issue number. This file records the completed changes;
-it is not an instruction plan. Do not add a `## Steps` section.
+`<number>` is the GitHub issue number. Start each implementation record with
+`# {GitHub issue title}`. This file records the completed changes; it is not an
+instruction plan. Do not add a `## Steps` section.
 
 Use this structure:
 
 `````markdown
+# P3S1: Add nested render tree support
+
 ## Changes
 
 ### Lines Changed

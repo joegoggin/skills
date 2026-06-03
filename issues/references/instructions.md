@@ -20,6 +20,7 @@ following:
   - DO NOT include multiple issues in one file.
   - If a matching file already exists for an issue, leave it unchanged and tell
     the user that instructions already exist for that issue.
+- Start each instruction file with `# {GitHub issue title}`.
 - Use the exact instruction-file structure below.
 - DO NOT implement the plan.
 
@@ -28,6 +29,8 @@ following:
 Use this top-level section order:
 
 ```markdown
+# P3S1: Add nested render tree support
+
 ## Goal
 
 Describe the implementation goal for this issue.
@@ -97,11 +100,12 @@ just lint
 ```
 ```
 
+- Always start with exactly one `# {GitHub issue title}` heading.
 - Always include `## Goal`, `## Summary`, `## Steps`, and `## Tests`.
 - Include `## Examples`, `## 3rd-party packages`, and `## References` only
   when they are relevant.
 - Keep the top-level section order exactly as shown when optional sections are
-  present.
+  present, with the title heading before `## Goal`.
 - In `## Steps`, always include `### Progress` first.
 - In `### Progress`, use one checkbox per top-level implementation step in this
   exact format: `- [ ] Step N - Short imperative task.`
