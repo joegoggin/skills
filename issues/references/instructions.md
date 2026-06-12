@@ -71,7 +71,9 @@ Complete one small task.
 
 #### file: `src/example.rs`
 
-Include the code diff or snippet needed for this file.
+Include a diff for existing-code changes, a snippet for added code, or both
+when this file needs both kinds of change. Add a `Lines:` label before each
+diff block.
 
 ### Step 2
 
@@ -81,7 +83,9 @@ Complete another small task.
 
 #### file: `src/another-example.rs`
 
-Include the code diff or snippet needed for this file.
+Include a diff for existing-code changes, a snippet for added code, or both
+when this file needs both kinds of change. Add a `Lines:` label before each
+diff block.
 
 ## Tests
 
@@ -117,8 +121,35 @@ just lint
   step, including relevant commands and important scope exclusions when needed.
 - After the description, add one ``#### file: `path/to/file` `` subsection for
   each file that needs an add or change in that step.
-- Under each ``#### file: `path/to/file` `` subsection, include the code diff or
-  code snippet needed to complete that file change.
+- Under each ``#### file: `path/to/file` `` subsection, include the code needed
+  to complete that file change.
+- Order diff chunks for the same file from top to bottom in the order they
+  should be applied.
+- Use a fenced `diff` block when the step modifies or removes existing code.
+- Immediately before each fenced `diff` block, add a line reference for the
+  relevant range within the current ``#### file: `path/to/file` `` subsection
+  in this exact format:
+  ```markdown
+  Lines: `6-9`
+  ```
+- Treat each `Lines:` label as the target range in the current in-progress file
+  state immediately before applying that diff block, after all earlier diff
+  blocks in the same file section.
+- Adjust later `Lines:` labels for net line additions or removals introduced by
+  earlier chunks. For example, if an earlier chunk adds one net line above a
+  later change, increase the later range by one.
+- Make each diff block cover one contiguous existing-code range being modified
+  or removed.
+- For non-contiguous changes in the same file, repeat the `Lines:` label and
+  fenced `diff` block for each range. Do not combine separate ranges in one
+  label.
+- Use a fenced language-specific snippet when the step adds new code, including
+  a new function, component, block, or file.
+- For snippets that add code to an existing file, name the insertion point or
+  surrounding anchor in the description or immediately before the snippet.
+- For mixed changes in one file, include both a `diff` block for existing-code
+  changes and a language-specific snippet for added code. Label each block
+  clearly.
 - Include all code needed to complete the step. Do not include full files unless
   the full file is genuinely needed; include only the surrounding context needed
   to make the add or change safely.
