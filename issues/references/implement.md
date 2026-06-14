@@ -95,6 +95,22 @@ Use this structure:
 
 Summarize what the new file adds and how it fits into the implementation.
 
+##### Models and Types
+
+###### `ModelName`
+
+Source line: `path/to/file1.rs:8`
+
+Explain what the model represents and how it is used.
+
+- field_name (type) - Describe the field.
+
+```rust
+struct ModelName {
+    field_name: Type,
+}
+```
+
 ##### Functions
 
 ###### `function_name(arg)`
@@ -175,15 +191,25 @@ Record the verification performed and any checks intentionally skipped.
   - ``#### Renamed File: `old/path` -> `new/path` ``
 - Start each file-detail section with a concise summary of what changed and how
   the file contributes to the issue implementation.
-- For code files, include symbol-group headings such as `##### Functions`,
-  `##### Types`, `##### Constants`, or another precise heading when useful for
-  review.
-- For each important function, method, type, constant, or other symbol, include:
-  a heading with the symbol name, a source line formatted like
-  `Source line: path/to/file.rs:12`, a short explanation, relevant parameters
-  or fields, and a code block showing the full implemented function or method
-  body when concise. For long bodies, include the complete signature and focused
-  excerpts of the changed or review-relevant logic with source line references.
+- For code files, include symbol-group headings such as `##### Models and
+  Types`, `##### Functions`, `##### Constants`, or another precise heading when
+  useful for review.
+- Include every new model, class, struct, enum, interface, schema, data transfer
+  object, ORM model, or other domain type introduced by the implementation.
+  Include changed model or type definitions when their public shape, validation,
+  relationships, or variants changed. For each one,
+  include a heading with the symbol name, a source line formatted like
+  `Source line: path/to/file.rs:12`, a short explanation, relevant fields or
+  variants, and a code block showing the complete definition when concise. For
+  long definitions, include the declaration and focused excerpts of changed or
+  review-relevant fields, validation, relationships, or variants with source
+  line references.
+- For each important function, method, constant, or other symbol, include: a
+  heading with the symbol name, a source line formatted like
+  `Source line: path/to/file.rs:12`, a short explanation, relevant parameters,
+  and a code block showing the full implemented function or method body when
+  concise. For long bodies, include the complete signature and focused excerpts
+  of the changed or review-relevant logic with source line references.
 - For test files, use `##### New Tests` or `##### Modified Tests` when tests
   changed. For each important test, include the test name, source line,
   `###### Assertions`, `###### Why`, and a code block showing the full test
