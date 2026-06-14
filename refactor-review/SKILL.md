@@ -69,13 +69,20 @@ instead and state it before presenting refactors.
 6. **Continue until all worthwhile refactors have been addressed.**
 7. **If no refactors are worth doing:** Say that clearly and mention any areas
    intentionally left alone.
-8. **After all accepted refactors are resolved:** Ask the user if they want to:
-   - Commit the changes.
-   - Push to the remote branch.
-   - Create a PR with a summary of the refactors.
-     - The summary and title should reflect all accepted refactors.
-     - If a PR for this branch already exists, update the summary to include
-       any new accepted refactors that are missing.
+8. **After all accepted refactors are resolved:** Ask the user with this prompt:
+
+   ```text
+   Would you like me to:
+
+   1) commit and push
+   2) create/update PR
+   3) all of the above
+   ```
+
+   - When creating or updating a PR, include a summary of the accepted refactors.
+   - The summary and title should reflect all accepted refactors.
+   - If a PR for this branch already exists, update the summary to include any
+     new accepted refactors that are missing.
 
 ## Example Format
 

@@ -64,10 +64,17 @@ progressive disclosure, bundled resources, UI metadata, and validation.
 6. **Continue until all meaningful skill issues have been addressed.**
 7. **If no issues are found:** Say that clearly and mention any residual
    validation gaps or areas not checked.
-8. **After all accepted fixes are resolved:** Ask the user if they want to:
-   - Commit the changes.
-   - Push to the remote branch.
-   - Create or update a PR with a summary of the accepted fixes.
+8. **After all accepted fixes are resolved:** Ask the user with this prompt:
+
+   ```text
+   Would you like me to:
+
+   1) commit and push
+   2) create/update PR
+   3) all of the above
+   ```
+
+   When creating or updating a PR, include a summary of the accepted fixes.
 
 ## Example Format
 

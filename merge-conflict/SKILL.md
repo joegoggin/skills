@@ -26,7 +26,14 @@ When asked to help resolve merge conflicts, follow this interactive process:
    - Verify no files remain in any unmerged state.
    - Stage resolved files.
    - Run relevant checks/build commands when possible and report results.
-7. After conflict resolution is complete, ask whether to:
-   - Commit the merge resolution
-   - Push the branch
-   - Create or update a PR summary
+7. After conflict resolution is complete, ask with this prompt:
+
+   ```text
+   Would you like me to:
+
+   1) commit and push
+   2) create/update PR
+   3) all of the above
+   ```
+
+   When creating or updating a PR, include a summary of the merge resolution.

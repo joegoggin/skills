@@ -39,13 +39,21 @@ against its base branch when one can be determined.
 6. **Continue until all issues have been addressed**
 7. **If no issues are found:** Say that clearly and mention any residual test
    gaps or areas not checked.
-8. **After all issues are resolved:** Ask the user if they want to:
-   - Commit the changes
-   - Push to the remote branch
-   - Create a PR with a summary of all the changes made during the review
-     - The summary and title should reflect all the changes made on the current branch
-     - If a PR for this branch already exists, update the summary to reflect
-       any new changes that might be missing
+8. **After all issues are resolved:** Ask the user with this prompt:
+
+   ```text
+   Would you like me to:
+
+   1) commit and push
+   2) create/update PR
+   3) all of the above
+   ```
+
+   - When creating or updating a PR, include a summary of all the changes made
+     during the review.
+   - The summary and title should reflect all the changes made on the current branch.
+   - If a PR for this branch already exists, update the summary to reflect any
+     new changes that might be missing.
 
 ## Example Format
 
