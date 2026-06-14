@@ -1,0 +1,4 @@
+interface:
+  display_name: "Issue Step"
+  short_description: "Implement one local issue step"
+  default_prompt: "Use $issues-step to implement one numbered instruction step."

@@ -1,0 +1,31 @@
+# Implementing One Issue Instruction Step
+
+When asked to implement a specific issue instruction step, such as
+`$issues #18 step 6`, `issue 18 step 6`, or `implement step 6 for #18`, use this
+workflow instead of the full issue implementation workflow:
+
+- Read only `issues/issue-<number>.md`.
+- Do not read the GitHub issue, parent issue, `AGENTS.md`, project metadata,
+  other instruction steps, or unrelated local context unless the selected step
+  explicitly instructs you to read them.
+- If `issues/issue-<number>.md` is missing, stop and report that the instruction
+  file is missing.
+- If `issues/issue-<number>.md` is an implementation record, stop and report
+  that it is not an instruction file. Treat the file as an implementation
+  record when its first content after an optional leading `# {issue title}`
+  heading is `## Changes`.
+- Locate exactly one `### Step <number>` section and exactly one matching
+  checkbox in `### Progress`.
+- If the selected step section or matching progress checkbox is missing or
+  ambiguous, stop and ask the user to fix the instruction file.
+- Follow only the instructions in the selected `### Step <number>` section.
+  Treat the rest of the file only as navigation for finding that section and its
+  progress checkbox.
+- Do not implement adjacent steps, inferred prerequisites, cleanup, or tests
+  outside the selected step unless the selected step explicitly includes them.
+- When the selected step is complete, update only its matching progress checkbox
+  from `- [ ] Step <number> - ...` to `- [x] Step <number> - ...`.
+- Preserve the instruction file structure and wording aside from that checkbox
+  update.
+- Run only checks or tests explicitly included in the selected step.
+- Describe what changed and provide the exact verification performed.

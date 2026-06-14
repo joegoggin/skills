@@ -1,0 +1,4 @@
+interface:
+  display_name: "Implement GitHub Issues"
+  short_description: "Implement GitHub issues and records"
+  default_prompt: "Use $issues-implement to implement a GitHub issue."

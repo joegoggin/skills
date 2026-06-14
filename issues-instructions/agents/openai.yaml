@@ -1,0 +1,4 @@
+interface:
+  display_name: "Issue Instructions"
+  short_description: "Write local issue implementation plans"
+  default_prompt: "Use $issues-instructions to write implementation instructions for an issue."

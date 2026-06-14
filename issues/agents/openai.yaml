@@ -1,4 +1,4 @@
 interface:
   display_name: "GitHub Issues"
-  short_description: "Manage GitHub issue workflows"
-  default_prompt: "Use $issues to create implementation issues for this repo."
+  short_description: "Route GitHub issue workflows"
+  default_prompt: "Use $issues to manage a GitHub issue workflow for this repo."

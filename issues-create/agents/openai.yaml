@@ -1,0 +1,4 @@
+interface:
+  display_name: "Create GitHub Issues"
+  short_description: "Create project-linked GitHub issues"
+  default_prompt: "Use $issues-create to create GitHub issues for this repo."

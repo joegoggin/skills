@@ -13,8 +13,9 @@ When asked to update or sync GitHub issue bodies, do the following:
   to GitHub issue bodies.
 - Read local `issues/issue-*.md` files only as context when they are directly
   relevant to the requested GitHub issue update.
-- When updating or syncing GitHub issue bodies, normalize main issues and sub-issues to
-  the structures defined in `references/create.md`.
+- When updating or syncing GitHub issue bodies, normalize main issues and
+  sub-issues to the structures defined in the sibling
+  `../issues-create/references/create.md` reference.
   - Main issues should include goal, optional dependencies, ordered sub-issue
     issue-number references, and manual tests.
   - Sub-issues should include goal, summary, optional examples, optional

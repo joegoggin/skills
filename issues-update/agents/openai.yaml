@@ -1,0 +1,4 @@
+interface:
+  display_name: "Update GitHub Issues"
+  short_description: "Sync and normalize GitHub issue bodies"
+  default_prompt: "Use $issues-update to sync a GitHub issue body."
