@@ -43,81 +43,41 @@ Use this structure:
 
 ## Changes
 
-### Lines Changed
+### File: `path/to/file1.rs`
 
-  +1,285
-  -0
+#### Lines: `1-4`
 
-### Files
+ 4
+ 0
 
-#### New
+Added the nested render tree data structures and traversal helpers used by the
+new rendering path.
 
-- `path/to/file1.rs`
+#### Line: `20`
 
-#### Modified
+ 1
+ 1
 
-- `path/to/file2.rs`
+Changed the parent lookup to preserve child ordering during nested render tree
+construction.
 
-#### New File: `path/to/file1.rs`
+#### Lines: `32-44`
 
-Summarize what the new file adds and how it fits into the implementation.
+ 13
+ 0
 
-##### Models and Types
+Updated render tree construction to attach child nodes instead of flattening
+them into the parent list.
 
-###### `ModelName`
+### File: `path/to/file2.rs`
 
-Source line: `path/to/file1.rs:8`
+#### Lines: `42-47`
 
-Explain what the model represents and how it is used.
+ 6
+ 0
 
-- field_name (type) - Describe the field.
-
-```rust
-struct ModelName {
-    field_name: Type,
-}
-```
-
-##### Functions
-
-###### `function_name(arg)`
-
-Source line: `path/to/file1.rs:12`
-
-Explain what the function does.
-
-- arg (type) - Describe the parameter.
-
-```rust
-fn function_name(arg: Type) {
-    // Full implemented function body when concise.
-}
-```
-
-#### Modified File: `path/to/file2.rs`
-
-Summarize what changed in the existing file.
-
-##### New Tests
-
-###### `test name`
-
-Source line: `path/to/file2.rs:45`
-
-###### Assertions
-
-- Describe the expected behavior verified by the test.
-
-###### Why
-
-Explain why this test matters for the issue.
-
-```rust
-#[test]
-fn test_name() {
-    // Full implemented test body when concise.
-}
-```
+Changed the render assertions to verify nested children and preserve coverage
+for existing flat render output.
 
 ## Tests
 
@@ -135,53 +95,40 @@ Record the verification performed and any checks intentionally skipped.
 ```
 `````
 
-- Populate `### Lines Changed` from the implementation diff. Use
-  `git diff --numstat` or an equivalent command for tracked files.
-- Format added and removed line counts with comma thousands separators, such as
-  `20,234` instead of `20234`. Prefix added counts with `+` and removed counts
-  with `-`.
+- Populate `## Changes` from the implementation diff. Use `git diff`,
+  `git diff --stat`, `git diff --numstat`, or equivalent commands for tracked
+  files.
 - Include untracked implementation files by counting each line as added and
   generating a new-file diff with `git diff --no-index /dev/null <path>` or an
   equivalent command.
 - Include only files changed for the issue implementation. Exclude the
   `issues/issue-<number>.md` implementation record itself from the listed files
   and line counts.
-- Under `### Files`, group implementation files by change status with these
-  headings when relevant: `#### New`, `#### Modified`, `#### Deleted`, and
-  `#### Renamed`. Omit empty status groups.
-- In each status group, list every matching implementation file once in path
-  order. For renamed files, list ``- `old/path` -> `new/path` ``.
-- Add one matching file-detail section for each listed file:
-  - ``#### New File: `path/to/file` ``
-  - ``#### Modified File: `path/to/file` ``
-  - ``#### Deleted File: `path/to/file` ``
-  - ``#### Renamed File: `old/path` -> `new/path` ``
-- Start each file-detail section with a concise summary of what changed and how
-  the file contributes to the issue implementation.
-- For code files, include symbol-group headings such as `##### Models and
-  Types`, `##### Functions`, `##### Constants`, or another precise heading when
-  useful for review.
-- Include every new model, class, struct, enum, interface, schema, data transfer
-  object, ORM model, or other domain type introduced by the implementation.
-  Include changed model or type definitions when their public shape, validation,
-  relationships, or variants changed. For each one,
-  include a heading with the symbol name, a source line formatted like
-  `Source line: path/to/file.rs:12`, a short explanation, relevant fields or
-  variants, and a code block showing the complete definition when concise. For
-  long definitions, include the declaration and focused excerpts of changed or
-  review-relevant fields, validation, relationships, or variants with source
-  line references.
-- For each important function, method, constant, or other symbol, include: a
-  heading with the symbol name, a source line formatted like
-  `Source line: path/to/file.rs:12`, a short explanation, relevant parameters,
-  and a code block showing the full implemented function or method body when
-  concise. For long bodies, include the complete signature and focused excerpts
-  of the changed or review-relevant logic with source line references.
-- For test files, use `##### New Tests` or `##### Modified Tests` when tests
-  changed. For each important test, include the test name, source line,
-  `###### Assertions`, `###### Why`, and a code block showing the full test
-  function body when concise. For long fixture-heavy or table-driven tests,
-  include the setup and assertions needed to understand the behavior.
+- Under `## Changes`, create one ``### File: `path/to/file` `` section for each
+  implementation file in path order. For renamed files, use
+  ``### File: `old/path` -> `new/path` ``. For deleted files, use the deleted
+  path.
+- Within each file section, create one line block for each tight contiguous
+  changed range. Use ``#### Line: `136` `` for a single changed line and
+  ``#### Lines: `107-110` `` for a multi-line range.
+- Use diff hunks as the default source for line blocks. Do not combine
+  non-contiguous changes into one broad range when untouched code sits between
+  them. Merge only overlapping or immediately contiguous changed ranges where
+  the resulting range does not hide unrelated untouched code.
+- Use the changed line range from the post-change file when available. For
+  deleted files, use the removed file's line range. For new files, use ranges
+  from the new file. If a binary file or generated artifact has no useful line
+  range, write ``#### Lines: `not applicable` ``.
+- In each line block, write ` <added line count>` and ` <removed line count>`
+  for that block only, not for the whole file. Use `0` when a block has no
+  additions or removals. Format large counts with comma thousands separators,
+  such as `20,234`.
+- After the counts, explain the change in prose. Focus on what changed, why it
+  matters for the issue, and any important behavior or compatibility effect.
+  Do not replace this with model, type, function, or symbol inventories.
+- For non-code files, generated files, lockfiles, dependency metadata, binary
+  files, and deleted files, use the same file/chunk format with a shorter prose
+  explanation.
 - In `## Tests`, include a brief verification summary plus result bullets for
   automated and manual checks. For checks that were not run, write `Not run`
   with the reason instead of leaving unchecked todo items.
@@ -189,8 +136,5 @@ Record the verification performed and any checks intentionally skipped.
   block when one or more command-backed verification items have stable commands.
 - In `### Useful commands`, include only commands that directly correspond to
   command-backed verification items, and list them in the same order.
-- For non-code files, generated files, lockfiles, dependency metadata, and
-  deleted files, use a shorter prose summary and omit symbol-level detail unless
-  it is useful for review.
 - Do not include per-file `### Diff` sections by default. Add diffs only when
   the user explicitly asks for them.
