@@ -22,6 +22,10 @@ When asked to implement an issue, do the following:
 - If an instruction file exists, update only the relevant checkboxes in its
   `### Progress` sections as steps are completed. Preserve the existing file
   structure and do not rewrite it into the implementation record format.
+- Run `$docs` with no additional input so current-branch and untracked changes
+  are documented according to the configured documentation conventions.
+- Treat documentation changes produced by `$docs` as part of the issue
+  implementation and include them in any implementation record created below.
 - If `issues/issue-<number>.md` does not exist, create it after implementation
   using the implementation record format below.
 - Run relevant checks or tests when possible.
