@@ -1,4 +1,4 @@
 interface:
   display_name: "Plan Project"
-  short_description: "Plan projects as phased GitHub issues"
-  default_prompt: "Use $plan-project to turn this project idea into phased GitHub issues without implementing it."
+  short_description: "Plan projects with continuous phase numbering"
+  default_prompt: "Use $plan-project to turn this new feature or project idea into the next sequentially numbered GitHub phases without implementing it."

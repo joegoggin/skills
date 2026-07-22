@@ -1,13 +1,13 @@
 ---
 name: plan-project
-description: Plan a new software project from a user-provided idea prompt, turn the implementation plan into ordered phases, and create GitHub issues for the plan without implementing the project. Use when Codex is asked to create GitHub issues for a new project plan, convert a project idea into phased implementation issues, or create phase issues with compactly named linked sub-issues using the issues skill. Do not use to implement code, create app files, run migrations, or start building the planned project.
+description: Plan a new or continuing software project from a user-provided idea prompt, turn the implementation plan into sequentially numbered phases, and create GitHub issues without implementing the project. Use when Codex is asked to create GitHub issues for an initial project plan, extend an existing phased plan with features or changes, or create phase issues with compactly named linked sub-issues using the issues skill. Do not use to implement code, create app files, run migrations, or start building the planned project.
 ---
 
 # Plan Project
 
 ## Overview
 
-Turn a project idea into a phased implementation plan, then use `$issues` to create GitHub issues from that plan. Do not implement the planned project.
+Turn a new project idea, feature, or change into a phased implementation plan, then use `$issues` to create GitHub issues from that plan. Continue numbering after existing phases when the project already has a plan. Do not implement the planned work.
 
 This skill defines the planning shape. Delegate GitHub project validation, labels, priorities, assignment, issue creation, sub-issue linking, and fallback behavior to `$issues`.
 
@@ -20,15 +20,16 @@ If the user asks to plan and implement in the same request, use this skill only 
 ## Workflow
 
 1. Read the user's project idea and inspect the repository if one exists.
-2. Clarify only high-impact unknowns that materially affect architecture, scope, platform, data ownership, or delivery order.
-3. Draft a phased implementation plan before creating issues.
-4. Convert each phase into a main issue.
-5. Convert each ordered phase step into a compactly named linked sub-issue under
+2. Locate the repository's GitHub Project and determine the next phase number.
+3. Clarify only high-impact unknowns that materially affect architecture, scope, platform, data ownership, or delivery order.
+4. Draft a phased implementation plan before creating issues.
+5. Convert each phase into a sequentially numbered main issue.
+6. Convert each ordered phase step into a compactly named linked sub-issue under
    that phase.
-6. Ensure each phase issue description lists all of its sub-issues.
-7. Use `$issues` to create the GitHub issues, treating each phase issue as the
+7. Ensure each phase issue description lists all of its sub-issues.
+8. Use `$issues` to create the GitHub issues, treating each phase issue as the
    main issue for that phase.
-8. Stop after summarizing the created issues. Do not begin implementing any phase or sub-issue.
+9. Stop after summarizing the created issues. Do not begin implementing any phase or sub-issue.
 
 ## Repository And Project Checks
 
@@ -37,6 +38,16 @@ Before creating issues, follow `$issues` project rules:
 - Read the repo's `AGENTS.md` and locate the GitHub Project for the repo.
 - If the project is missing or ambiguous, do not create issues; tell the user no GitHub Project is clearly defined and ask them to add or clarify it in `AGENTS.md`.
 - If the project is defined but available tools cannot add issues to that project, do not create issues unless the user explicitly approves creating them without project linkage.
+
+## Phase Numbering
+
+Before drafting the plan, inspect all active and archived items in the configured GitHub Project whose content is an open or closed issue. Check those issues for main titles in the canonical form `Phase N: {short title}`, where `N` is a positive integer.
+
+- Use one greater than the highest canonical phase number as the first new phase number.
+- Start at Phase 1 when no canonical phase issue exists. Treat this as normal project planning, not as an error or a different workflow.
+- Number multiple new phases consecutively from that starting number.
+- Ignore child issue titles, unrelated items, and malformed phase titles. Do not renumber existing issues. Gaps and duplicate phase numbers do not change the highest-number rule.
+- If the available tools cannot enumerate the project's issues, do not guess or create issues. Tell the user the next phase number cannot be determined safely.
 
 ## Planning Shape
 
@@ -57,6 +68,7 @@ Default the label to `Feature` and priority to `Medium` unless the project idea 
 For each phase:
 
 - Create one main phase issue summarizing the phase goal, scope, dependencies, acceptance criteria, label, and priority.
+- Title the main issue as `Phase {phase_number}: {short phase title}`, for example `Phase 6: Add team collaboration`.
 - Create one linked sub-issue for each implementation step.
 - Do not create a separate project-wide parent issue unless the user explicitly asks for one.
 - Title each phase sub-issue as `P{phase_number}S{step_number}: {short task
