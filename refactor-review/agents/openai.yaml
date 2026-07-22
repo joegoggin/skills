@@ -1,4 +1,4 @@
 interface:
   display_name: "Refactor Review"
-  short_description: "Suggest refactors one at a time"
-  default_prompt: "Use $refactor-review to suggest current-branch refactors one at a time."
+  short_description: "Suggest focused refactors and logical file splits"
+  default_prompt: "Use $refactor-review to suggest current-branch refactors, including logical splits for oversized files, one at a time."
