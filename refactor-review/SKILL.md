@@ -1,6 +1,6 @@
 ---
 name: refactor-review
-description: Suggest current-branch refactors for maintainability, readability, duplication reduction, architecture fit, naming, dead code removal, and testability. Use when Codex is asked to refactor, improve structure, simplify code, reduce duplication, or propose cleanup changes, and should present proposed refactors interactively one at a time.
+description: Suggest current-branch refactors for maintainability, readability, duplication reduction, architecture fit, naming, dead code removal, testability, and oversized-file decomposition. Use when Codex is asked to refactor, improve structure, simplify code, reduce duplication, split large files, or propose cleanup changes, and should present proposed refactors interactively one at a time.
 ---
 
 # Refactor Review
@@ -14,6 +14,10 @@ its base branch when one can be determined.
 If the user names files, directories, a PR, or a repo-wide scope, use that scope
 instead and state it before presenting refactors.
 
+When assessing oversized files, inspect the complete in-scope files and nearby
+module structure, not only changed lines. Exclude generated, vendored, and build
+output files unless the user explicitly includes them.
+
 ## What to Look For
 
 - **Duplication** - Consolidate repeated logic, constants, types, fixtures, or
@@ -24,6 +28,10 @@ instead and state it before presenting refactors.
   structure when it makes intent easier to read.
 - **Cohesion and module boundaries** - Move logic closer to its owner or split
   unrelated responsibilities when the repo already has a clear pattern.
+- **Oversized files** - Look for files whose mixed responsibilities, navigation
+  difficulty, or divergence from nearby repository conventions justify a logical
+  split. Use contextual evidence rather than a fixed line-count threshold, and
+  do not flag a large file that remains cohesive and easy to maintain.
 - **Dead code** - Remove unreachable, unused, or obsolete code when confidence
   is high.
 - **Testability** - Extract pure helpers, isolate side effects, or clarify
@@ -45,6 +53,9 @@ instead and state it before presenting refactors.
    asked for review, use `$code-review` instead.
 5. **Minimize blast radius** - Favor small, verifiable changes that can be
    accepted or rejected independently.
+6. **Split by responsibility** - Recommend decomposing an oversized file only
+   when each proposed file has a distinct, durable role and the resulting
+   structure follows repository conventions.
 
 ## Process
 
@@ -56,8 +67,13 @@ instead and state it before presenting refactors.
    - Provide a brief title.
    - Explain why the refactor is worthwhile.
    - List every file that would be affected.
-   - Include a file tree when files would be added, removed, renamed, or moved.
-   - Show a diff or focused code example of the proposed change.
+   - For an oversized-file refactor, explain the contextual evidence that the
+     file should be split and show an annotated tree of the complete proposed
+     file structure. Give each file a short responsibility description. Do not
+     provide a diff or focused code example for this refactor category.
+   - For every other refactor, include a file tree when files would be added,
+     removed, renamed, or moved, then show a diff or focused code example of the
+     proposed change.
    - State the behavior-preservation assumption.
    - Name the tests or checks to run after applying it.
    - Ask the user whether to accept or reject the refactor.
@@ -124,4 +140,19 @@ same inputs; only the duplicated check moves into a helper.
 **Checks:** Run `npm test -- users` or the closest relevant test target.
 
 Do you want to accept this refactor?
+```
+
+For an oversized-file refactor, replace the proposed diff with:
+
+```
+**Proposed file structure:**
+
+\`\`\`text
+src/orders/
+|-- service.ts        # Preserve the public API and coordinate the workflow
+|-- validation.ts     # Validate order input and domain preconditions
+|-- pricing.ts        # Calculate totals, discounts, and taxes
+|-- repository.ts     # Read and persist orders
+`-- notifications.ts  # Dispatch order-status notifications
+\`\`\`
 ```
