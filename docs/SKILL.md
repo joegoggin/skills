@@ -1,6 +1,6 @@
 ---
 name: docs
-description: Apply repository documentation conventions. Use when Codex is adding, editing, checking, auditing, or refreshing docs, comments, or docstrings; when the user invokes `$docs` with no additional input, update missing, stale, misleading, or convention-mismatched documentation in current-branch and untracked workspace changes using this skill's references.
+description: Apply configured Rust and Lua documentation conventions. Use when Codex is adding, editing, checking, auditing, or refreshing documentation, comments, or docstrings in Rust or Lua files; when the user invokes `$docs` with no additional input, update applicable documentation in current-branch and untracked workspace changes. Do not use for documentation work limited to other file types.
 ---
 
 # Documentation Conventions
@@ -20,8 +20,7 @@ unless the user explicitly asks to include them.
 Check changed supported-language files for missing, stale, misleading, or
 convention-mismatched documentation. Update or remove documentation so it
 accurately describes the current code and follows the configured convention.
-Report the files changed and any changed files skipped because no convention is
-configured.
+Report the files changed.
 
 Documentation conventions may differ by language. Check the `references`
 directory and load only the file that matches the language being documented.
@@ -32,19 +31,19 @@ directory and load only the file that matches the language being documented.
 ## Editing Documentation
 
 When the user asks to add, edit, refresh, or apply documentation fixes, modify
-documentation only for languages with configured conventions.
+documentation according to this skill only for file types with configured
+conventions. For other file types, continue under ordinary repository and user
+instructions without applying this skill.
 
 ## What to Ignore
 
 - Config files (`*.json`, `*.toml`, `*.yml`, etc.)
 - Style files (`*.css`, `*.scss`, etc.)
 
-## No Convention Found
+## Unsupported File Types
 
-If no convention exists for a language, do not add or edit documentation for
-that language by default. During a bare `$docs` invocation, skip unsupported
-languages and report them instead of asking whether to proceed.
-
-When the user explicitly asks to add, edit, refresh, or apply documentation in
-an unsupported language, inform the user that no documentation convention is
-configured and ask whether to proceed without one.
+When no matching convention exists, treat the file type as outside this skill's
+scope. Do not inspect it through this skill, apply documentation rules, warn,
+report, prompt for confirmation, or block the task. During a bare `$docs`
+invocation, silently skip unsupported file types. During an explicit
+documentation request, continue using ordinary repository and user instructions.
