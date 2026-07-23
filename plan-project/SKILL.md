@@ -1,21 +1,24 @@
 ---
 name: plan-project
-description: Plan a new or continuing software project from a user-provided idea prompt, turn the implementation plan into sequentially numbered phases, and create GitHub issues without implementing the project. Use when Codex is asked to create GitHub issues for an initial project plan, extend an existing phased plan with features or changes, or create phase issues with compactly named linked sub-issues using the issues skill. Do not use to implement code, create app files, run migrations, or start building the planned project.
+description: Plan a new or continuing software project from a user-provided idea prompt, turn the implementation plan into sequentially numbered phases, and create GitHub issues without implementing the project. Use when Codex is asked to create GitHub issues for an initial project plan, extend an existing phased plan with features or changes, or create phase issues with compactly named linked sub-issues using the issues-create skill. Do not use to implement code, create app files, run migrations, or start building the planned project.
 ---
 
 # Plan Project
 
 ## Overview
 
-Turn a new project idea, feature, or change into a phased implementation plan, then use `$issues` to create GitHub issues from that plan. Continue numbering after existing phases when the project already has a plan. Do not implement the planned work.
+Turn a new project idea, feature, or change into a phased implementation plan, then use `$issues-create` to create GitHub issues from that plan. Continue numbering after existing phases when the project already has a plan. Do not implement the planned work.
 
-This skill defines the planning shape. Delegate GitHub project validation, labels, priorities, assignment, issue creation, sub-issue linking, and fallback behavior to `$issues`.
+This skill defines the planning shape. Delegate GitHub project validation, labels, priorities, assignment, issue creation, sub-issue linking, and fallback behavior to `$issues-create`.
 
 ## Implementation Boundary
 
 Never implement the project work as part of this skill. Do not edit application code, create project files, scaffold an app, run migrations, start services, install dependencies, or begin work on any created issue.
 
 If the user asks to plan and implement in the same request, use this skill only to plan and create issues, then stop. Implementation requires a separate explicit request after issue creation.
+
+For issue work, use only `$issues-create`. Do not invoke `$issues`,
+`$issues-implement`, `$issues-step`, or `$issues-instructions`.
 
 ## Workflow
 
@@ -27,13 +30,13 @@ If the user asks to plan and implement in the same request, use this skill only 
 6. Convert each ordered phase step into a compactly named linked sub-issue under
    that phase.
 7. Ensure each phase issue description lists all of its sub-issues.
-8. Use `$issues` to create the GitHub issues, treating each phase issue as the
+8. Use `$issues-create` to create the GitHub issues, treating each phase issue as the
    main issue for that phase.
 9. Stop after summarizing the created issues. Do not begin implementing any phase or sub-issue.
 
 ## Repository And Project Checks
 
-Before creating issues, follow `$issues` project rules:
+Before creating issues, follow `$issues-create` project rules:
 
 - Read the repo's `AGENTS.md` and locate the GitHub Project for the repo.
 - If the project is missing or ambiguous, do not create issues; tell the user no GitHub Project is clearly defined and ask them to add or clarify it in `AGENTS.md`.
@@ -61,7 +64,7 @@ For each phase, include:
 - Acceptance criteria.
 - Suggested label and priority.
 
-Default the label to `Feature` and priority to `Medium` unless the project idea clearly implies another `$issues` label or priority.
+Default the label to `Feature` and priority to `Medium` unless the project idea clearly implies another `$issues-create` label or priority.
 
 ## Issue Creation Shape
 
@@ -78,7 +81,7 @@ For each phase:
 - Order sub-issues in the sequence they should be implemented.
 - After sub-issues exist, ensure the phase issue description lists every sub-issue with links or issue numbers.
 
-If GitHub sub-issue relationships are unavailable through the current tools, follow `$issues` fallback behavior: create child issues that link back to the phase issue, list them in the phase issue description, and tell the user the sub-issue relationship must be added manually.
+If GitHub sub-issue relationships are unavailable through the current tools, follow `$issues-create` fallback behavior: create child issues that link back to the phase issue, list them in the phase issue description, and tell the user the sub-issue relationship must be added manually.
 
 ## Output
 
