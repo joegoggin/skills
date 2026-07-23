@@ -77,7 +77,7 @@ output is covered without dropping existing flat-render coverage.
 
 ### File: `path/to/file1.rs`
 
-#### Lines: `1-4`
+#### Lines: `2-5`
 
  4
  0
@@ -85,13 +85,34 @@ output is covered without dropping existing flat-render coverage.
 Added the nested render tree data structures and traversal helpers used by the
 new rendering path.
 
-#### Line: `20`
+```diff
+@@ -1,2 +1,6 @@
+ use crate::tree::NodeId;
++struct RenderNode {
++    parent: Option<NodeId>,
++    children: Vec<NodeId>,
++}
+ fn render_tree(root: NodeId) -> RenderTree {
+```
+
+#### Line: `24`
 
  1
  1
 
 Changed the parent lookup to preserve child ordering during nested render tree
 construction.
+
+```diff
+@@ -17,6 +21,6 @@ fn find_parent(
+     tree: &RenderTree,
+     child: NodeId,
+ ) -> Option<NodeId> {
+-    tree.nodes.iter().find_map(|node| node.contains(child))
++    tree.nodes.iter().find_map(|node| node.parent_of(child))
+ }
+ fn attach_children(
+```
 
 #### Lines: `32-44`
 
@@ -100,6 +121,28 @@ construction.
 
 Updated render tree construction to attach child nodes instead of flattening
 them into the parent list.
+
+```diff
+@@ -25,5 +29,18 @@ fn attach_children(
+     parent_id: NodeId,
+     children: &[SourceNode],
+ ) -> RenderTree {
++    for child in children {
++        tree.nodes.push(RenderNode {
++            id: child.id,
++            parent: Some(parent_id),
++            children: Vec::new(),
++        });
++        attach_children(
++            tree,
++            child.id,
++            &child.children,
++        );
++    }
++    tree
+ }
+ fn flatten_tree(tree: &RenderTree) -> Vec<NodeId> {
+```
 
 ### File: `path/to/file2.rs`
 
@@ -110,6 +153,21 @@ them into the parent list.
 
 Changed the render assertions to verify nested children and preserve coverage
 for existing flat render output.
+
+```diff
+@@ -39,5 +39,11 @@ fn renders_nested_tree() {
+     let output = render(fixture());
+     assert_eq!(output.root(), NodeId(1));
+     assert_eq!(output.nodes().len(), 3);
++    assert_eq!(
++        output.children(NodeId(1)),
++        &[NodeId(2), NodeId(3)],
++    );
++    assert!(output.children(NodeId(2)).is_empty());
++    assert!(output.children(NodeId(3)).is_empty());
+ }
+ #[test]
+```
 
 ## Tests
 
@@ -173,6 +231,9 @@ Record the verification performed and any checks intentionally skipped.
   deleted files, use the removed file's line range. For new files, use ranges
   from the new file. If a binary file or generated artifact has no useful line
   range, write ``#### Lines: `not applicable` ``.
+- When a textual hunk is embedded, derive the line heading from only its added
+  or replacement lines in the post-change file, excluding unchanged context
+  lines. For a deletion-only hunk, use only its removed line range.
 - In each line block, write ` <added line count>` and ` <removed line count>`
   for that block only, not for the whole file. Use `0` when a block has no
   additions or removals. Format large counts with comma thousands separators,
@@ -180,6 +241,18 @@ Record the verification performed and any checks intentionally skipped.
 - After the counts, explain the change in prose. Focus on what changed, why it
   matters for the issue, and any important behavior or compatibility effect.
   Do not replace this with model, type, function, or symbol inventories.
+- After the prose in every textual line block, include the exact corresponding
+  Git hunk in a fenced `diff` block. Preserve its `@@` header, context lines,
+  and added and removed lines. Do not rewrite, abbreviate, or truncate the
+  hunk, and do not repeat the file-level `diff --git`, `---`, or `+++` headers.
+- Include textual diffs for every implementation file, including generated
+  files, lockfiles, dependency metadata, new files, and deleted files.
+- For rename-only, mode-only, or other metadata-only changes, use
+  ``#### Lines: `not applicable` `` and include the available Git metadata in a
+  fenced `diff` block after the counts and prose.
+- For binary files, use ``#### Lines: `not applicable` `` and write a short
+  note after the counts and prose that no textual diff is available. Do not
+  fabricate or encode binary content.
 - For non-code files, generated files, lockfiles, dependency metadata, binary
   files, and deleted files, use the same file/chunk format with a shorter prose
   explanation.
@@ -190,5 +263,3 @@ Record the verification performed and any checks intentionally skipped.
   block when one or more command-backed verification items have stable commands.
 - In `### Useful commands`, include only commands that directly correspond to
   command-backed verification items, and list them in the same order.
-- Do not include per-file `### Diff` sections by default. Add diffs only when
-  the user explicitly asks for them.
