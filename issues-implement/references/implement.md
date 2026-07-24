@@ -61,7 +61,7 @@ lines changed:
 Files modified:
 
 - `path/to/file1.rs`
-- `path/to/file2.rs`
+- `path/to/tests/render_tree.rs`
 
 Files added:
 
@@ -144,30 +144,16 @@ them into the parent list.
  fn flatten_tree(tree: &RenderTree) -> Vec<NodeId> {
 ```
 
-### File: `path/to/file2.rs`
-
-#### Lines: `42-47`
+### File: `path/to/tests/render_tree.rs`
 
  6
  0
 
-Changed the render assertions to verify nested children and preserve coverage
-for existing flat render output.
-
-```diff
-@@ -39,5 +39,11 @@ fn renders_nested_tree() {
-     let output = render(fixture());
-     assert_eq!(output.root(), NodeId(1));
-     assert_eq!(output.nodes().len(), 3);
-+    assert_eq!(
-+        output.children(NodeId(1)),
-+        &[NodeId(2), NodeId(3)],
-+    );
-+    assert!(output.children(NodeId(2)).is_empty());
-+    assert!(output.children(NodeId(3)).is_empty());
- }
- #[test]
-```
+- Test changed: `renders_nested_tree`.
+- Asserts: The root retains children `2` and `3`, and both children remain
+  leaves.
+- Why: Covers the new nested structure while preserving the existing flat
+  render expectations.
 
 ## Tests
 
@@ -207,33 +193,47 @@ Record the verification performed and any checks intentionally skipped.
   data-flow changes, documentation updates, compatibility effects, and notable
   renamed or deleted files when relevant. Do not duplicate the per-file
   line-count detail from `## Changes`.
-- Populate `## Changes` from the implementation diff. Use `git diff`,
-  `git diff --stat`, `git diff --numstat`, or equivalent commands for tracked
-  files.
+- Populate `## Changes` from all in-scope tracked implementation changes,
+  including staged and unstaged changes. Compare against `HEAD` with
+  `git diff HEAD`, `git diff HEAD --stat`, and `git diff HEAD --numstat`, or
+  equivalent commands that cover both states.
 - Include untracked implementation files by counting each line as added and
   generating a new-file diff with `git diff --no-index /dev/null <path>` or an
   equivalent command.
 - Include only files changed for the issue implementation. Exclude the
   `issues/issue-<number>.md` implementation record itself from the listed files
   and line counts.
+- Before formatting `## Changes`, classify each implementation file as
+  test-only or diff-required. Treat a source file as test-only only when every
+  changed hunk is test code. Use conventional patterns such as `tests/`,
+  `__tests__/`, `*.test.*`, `*.spec.*`, and `*_test.*` as evidence, but inspect
+  the changed hunks before applying the exception. Treat mixed production/test
+  files and non-test artifacts such as fixtures, snapshots, and golden files as
+  diff-required.
 - Under `## Changes`, create one ``### File: `path/to/file` `` section for each
   implementation file in path order. For renamed files, use
   ``### File: `old/path` -> `new/path` ``. For deleted files, use the deleted
   path.
-- Within each file section, create one line block for each tight contiguous
-  changed range. Use ``#### Line: `136` `` for a single changed line and
-  ``#### Lines: `107-110` `` for a multi-line range.
-- Use diff hunks as the default source for line blocks. Do not combine
-  non-contiguous changes into one broad range when untouched code sits between
-  them. Merge only overlapping or immediately contiguous changed ranges where
-  the resulting range does not hide unrelated untouched code.
+- For each test-only file, write the file's total ` <added line count>` and
+  ` <removed line count>`. List every test added, changed, or removed; state
+  what behavior and assertions it covers and why that coverage matters. Also
+  summarize changed setup, mocks, builders, or helpers within the test source
+  file and identify the tests or scenarios they affect. For removed tests,
+  state which assertions were removed and why their removal does not leave a
+  coverage gap. Do not add line blocks or fenced diffs for test-only files.
+- For each diff-required file, create exactly one line block for each Git
+  hunk. Do not split, combine, or repeat hunks.
+- Derive the line heading from the changed ranges inside the hunk. Use
+  ``#### Line: `136` `` for one changed line, ``#### Lines: `107-110` `` for
+  one contiguous range, and ``#### Lines: `107-110, 124-126` `` when one hunk
+  contains multiple changed ranges.
 - Use the changed line range from the post-change file when available. For
   deleted files, use the removed file's line range. For new files, use ranges
   from the new file. If a binary file or generated artifact has no useful line
   range, write ``#### Lines: `not applicable` ``.
-- When a textual hunk is embedded, derive the line heading from only its added
-  or replacement lines in the post-change file, excluding unchanged context
-  lines. For a deletion-only hunk, use only its removed line range.
+- Derive each heading range from only added or replacement lines in the
+  post-change file, excluding unchanged context. For deletion-only hunks, use
+  the removed ranges from the pre-change file.
 - In each line block, write ` <added line count>` and ` <removed line count>`
   for that block only, not for the whole file. Use `0` when a block has no
   additions or removals. Format large counts with comma thousands separators,
@@ -241,12 +241,15 @@ Record the verification performed and any checks intentionally skipped.
 - After the counts, explain the change in prose. Focus on what changed, why it
   matters for the issue, and any important behavior or compatibility effect.
   Do not replace this with model, type, function, or symbol inventories.
-- After the prose in every textual line block, include the exact corresponding
-  Git hunk in a fenced `diff` block. Preserve its `@@` header, context lines,
-  and added and removed lines. Do not rewrite, abbreviate, or truncate the
-  hunk, and do not repeat the file-level `diff --git`, `---`, or `+++` headers.
-- Include textual diffs for every implementation file, including generated
-  files, lockfiles, dependency metadata, new files, and deleted files.
+- After the prose in every textual line block for a diff-required file,
+  include the exact corresponding Git hunk in a fenced `diff` block. Preserve
+  its `@@` header, context lines, and added and removed lines. Do not rewrite,
+  abbreviate, truncate, or substitute representative excerpts for any hunk,
+  and do not repeat the file-level `diff --git`, `---`, or `+++` headers.
+- Include every textual hunk for every diff-required implementation file,
+  including documentation, generated files, lockfiles, dependency metadata,
+  new files, and deleted files. Test-only files are the sole textual-diff
+  exception.
 - For rename-only, mode-only, or other metadata-only changes, use
   ``#### Lines: `not applicable` `` and include the available Git metadata in a
   fenced `diff` block after the counts and prose.
@@ -256,6 +259,13 @@ Record the verification performed and any checks intentionally skipped.
 - For non-code files, generated files, lockfiles, dependency metadata, binary
   files, and deleted files, use the same file/chunk format with a shorter prose
   explanation.
+- Immediately before finalizing the record, recapture the complete
+  implementation diff against `HEAD`, including staged, unstaged, and
+  untracked files. Exclude the implementation record itself, then verify that
+  every remaining in-scope file appears in `## Changes`, every test-only file
+  has the required test summary, and every hunk from every diff-required
+  textual file appears exactly once and in full. Do not finish or describe the
+  record as complete while any required file, hunk, or test summary is missing.
 - In `## Tests`, include a brief verification summary plus result bullets for
   automated and manual checks. For checks that were not run, write `Not run`
   with the reason instead of leaving unchecked todo items.
