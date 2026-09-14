@@ -9,6 +9,10 @@ description: 'Implement a whole GitHub issue for a repository project. Use when 
 
 Read `references/implement.md` before implementing a whole issue.
 
+Write implementation records with detailed descriptions of completed changes
+for each file, rather than reproducing diffs. Retain summary totals and test
+results using the reference format.
+
 Do not use this skill for an exact numbered instruction step such as
 `$issues #18 step 6`; use `$issues-step` instead.
 

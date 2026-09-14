@@ -27,8 +27,9 @@ For issue work, use only `$issues-create`. Do not invoke `$issues`,
 3. Clarify only high-impact unknowns that materially affect architecture, scope, platform, data ownership, or delivery order.
 4. Draft a phased implementation plan before creating issues.
 5. Convert each phase into a sequentially numbered main issue.
-6. Convert each ordered phase step into a compactly named linked sub-issue under
-   that phase.
+6. Draft a technical spec for each ordered phase step using
+   [references/sub-issue-spec.md](references/sub-issue-spec.md), then use each
+   spec as the body of a compactly named linked sub-issue under that phase.
 7. Ensure each phase issue description lists all of its sub-issues.
 8. Use `$issues-create` to create the GitHub issues, treating each phase issue as the
    main issue for that phase.
@@ -77,7 +78,14 @@ For each phase:
 - Title each phase sub-issue as `P{phase_number}S{step_number}: {short task
   title}`, for example `P3S1: Add nested render tree support`.
 - Keep sub-issues small enough to implement independently, with phase context
-  and a clear expected result.
+  and a clear expected result. Read
+  [references/sub-issue-spec.md](references/sub-issue-spec.md) before drafting
+  their specs. Inspect relevant repository files, interfaces, and verification
+  commands to ground the specs; resolve material unknowns during planning.
+- Pass the drafted specs to `$issues-create` as the sub-issue bodies, preserving
+  their technical spec format rather than converting them to its default body
+  template. Publish specs in GitHub issue bodies; do not create separate local
+  spec files as part of this workflow.
 - Order sub-issues in the sequence they should be implemented.
 - After sub-issues exist, ensure the phase issue description lists every sub-issue with links or issue numbers.
 

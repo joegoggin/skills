@@ -77,83 +77,18 @@ output is covered without dropping existing flat-render coverage.
 
 ### File: `path/to/file1.rs`
 
-#### Lines: `2-5`
+Added parent-child relationships to the render tree and updated construction
+to retain nested children instead of flattening them. Parent lookup now uses
+explicit relationships while preserving sibling ordering.
 
- 4
- 0
-
-Added the nested render tree data structures and traversal helpers used by the
-new rendering path.
-
-```diff
-@@ -1,2 +1,6 @@
- use crate::tree::NodeId;
-+struct RenderNode {
-+    parent: Option<NodeId>,
-+    children: Vec<NodeId>,
-+}
- fn render_tree(root: NodeId) -> RenderTree {
-```
-
-#### Line: `24`
-
- 1
- 1
-
-Changed the parent lookup to preserve child ordering during nested render tree
-construction.
-
-```diff
-@@ -17,6 +21,6 @@ fn find_parent(
-     tree: &RenderTree,
-     child: NodeId,
- ) -> Option<NodeId> {
--    tree.nodes.iter().find_map(|node| node.contains(child))
-+    tree.nodes.iter().find_map(|node| node.parent_of(child))
- }
- fn attach_children(
-```
-
-#### Lines: `32-44`
-
- 13
- 0
-
-Updated render tree construction to attach child nodes instead of flattening
-them into the parent list.
-
-```diff
-@@ -25,5 +29,18 @@ fn attach_children(
-     parent_id: NodeId,
-     children: &[SourceNode],
- ) -> RenderTree {
-+    for child in children {
-+        tree.nodes.push(RenderNode {
-+            id: child.id,
-+            parent: Some(parent_id),
-+            children: Vec::new(),
-+        });
-+        attach_children(
-+            tree,
-+            child.id,
-+            &child.children,
-+        );
-+    }
-+    tree
- }
- fn flatten_tree(tree: &RenderTree) -> Vec<NodeId> {
-```
+Updated the public type documentation to explain how callers traverse the
+tree. Existing flat-tree behavior remains supported.
 
 ### File: `path/to/tests/render_tree.rs`
 
- 6
- 0
-
-- Test changed: `renders_nested_tree`.
-- Asserts: The root retains children `2` and `3`, and both children remain
-  leaves.
-- Why: Covers the new nested structure while preserving the existing flat
-  render expectations.
+Updated `renders_nested_tree` to assert that the root retains children `2`
+and `3` and both children remain leaves. This covers the new nested structure
+while retaining the existing flat-render assertions for compatibility.
 
 ## Tests
 
@@ -191,81 +126,46 @@ Record the verification performed and any checks intentionally skipped.
 - In `## Summary`, write detailed prose describing what changed and why it
   matters for the issue. Cover user-visible behavior, internal architecture or
   data-flow changes, documentation updates, compatibility effects, and notable
-  renamed or deleted files when relevant. Do not duplicate the per-file
-  line-count detail from `## Changes`.
+  renamed or deleted files when relevant. Keep the summary focused on the
+  overall outcome rather than repeating each file description.
 - Populate `## Changes` from all in-scope tracked implementation changes,
   including staged and unstaged changes. Compare against `HEAD` with
   `git diff HEAD`, `git diff HEAD --stat`, and `git diff HEAD --numstat`, or
   equivalent commands that cover both states.
-- Include untracked implementation files by counting each line as added and
-  generating a new-file diff with `git diff --no-index /dev/null <path>` or an
-  equivalent command.
+- Inspect untracked implementation files and count each textual line as added.
+  Use diffs as inspection evidence only; do not reproduce patches in the record.
+  Binary files have no textual line counts and must not be assigned invented
+  counts.
 - Include only files changed for the issue implementation. Exclude the
   `issues/issue-<number>.md` implementation record itself from the listed files
   and line counts.
-- Before formatting `## Changes`, classify each implementation file as
-  test-only or diff-required. Treat a source file as test-only only when every
-  changed hunk is test code. Use conventional patterns such as `tests/`,
-  `__tests__/`, `*.test.*`, `*.spec.*`, and `*_test.*` as evidence, but inspect
-  the changed hunks before applying the exception. Treat mixed production/test
-  files and non-test artifacts such as fixtures, snapshots, and golden files as
-  diff-required.
 - Under `## Changes`, create one ``### File: `path/to/file` `` section for each
   implementation file in path order. For renamed files, use
   ``### File: `old/path` -> `new/path` ``. For deleted files, use the deleted
   path.
-- For each test-only file, write the file's total ` <added line count>` and
-  ` <removed line count>`. List every test added, changed, or removed; state
-  what behavior and assertions it covers and why that coverage matters. Also
-  summarize changed setup, mocks, builders, or helpers within the test source
-  file and identify the tests or scenarios they affect. For removed tests,
-  state which assertions were removed and why their removal does not leave a
-  coverage gap. Do not add line blocks or fenced diffs for test-only files.
-- For each diff-required file, create exactly one line block for each Git
-  hunk. Do not split, combine, or repeat hunks.
-- Derive the line heading from the changed ranges inside the hunk. Use
-  ``#### Line: `136` `` for one changed line, ``#### Lines: `107-110` `` for
-  one contiguous range, and ``#### Lines: `107-110, 124-126` `` when one hunk
-  contains multiple changed ranges.
-- Use the changed line range from the post-change file when available. For
-  deleted files, use the removed file's line range. For new files, use ranges
-  from the new file. If a binary file or generated artifact has no useful line
-  range, write ``#### Lines: `not applicable` ``.
-- Derive each heading range from only added or replacement lines in the
-  post-change file, excluding unchanged context. For deletion-only hunks, use
-  the removed ranges from the pre-change file.
-- In each line block, write ` <added line count>` and ` <removed line count>`
-  for that block only, not for the whole file. Use `0` when a block has no
-  additions or removals. Format large counts with comma thousands separators,
-  such as `20,234`.
-- After the counts, explain the change in prose. Focus on what changed, why it
-  matters for the issue, and any important behavior or compatibility effect.
-  Do not replace this with model, type, function, or symbol inventories.
-- After the prose in every textual line block for a diff-required file,
-  include the exact corresponding Git hunk in a fenced `diff` block. Preserve
-  its `@@` header, context lines, and added and removed lines. Do not rewrite,
-  abbreviate, truncate, or substitute representative excerpts for any hunk,
-  and do not repeat the file-level `diff --git`, `---`, or `+++` headers.
-- Include every textual hunk for every diff-required implementation file,
-  including documentation, generated files, lockfiles, dependency metadata,
-  new files, and deleted files. Test-only files are the sole textual-diff
-  exception.
-- For rename-only, mode-only, or other metadata-only changes, use
-  ``#### Lines: `not applicable` `` and include the available Git metadata in a
-  fenced `diff` block after the counts and prose.
-- For binary files, use ``#### Lines: `not applicable` `` and write a short
-  note after the counts and prose that no textual diff is available. Do not
-  fabricate or encode binary content.
-- For non-code files, generated files, lockfiles, dependency metadata, binary
-  files, and deleted files, use the same file/chunk format with a shorter prose
-  explanation.
-- Immediately before finalizing the record, recapture the complete
-  implementation diff against `HEAD`, including staged, unstaged, and
-  untracked files. Exclude the implementation record itself, then verify that
-  every remaining in-scope file appears in `## Changes`, every test-only file
-  has the required test summary, and every hunk from every diff-required
-  textual file appears exactly once and in full. Do not finish or describe the
-  record as complete while any required file, hunk, or test summary is missing.
+- Describe each file's completed changes in detailed prose or focused bullets:
+  what changed, why it was needed, and relevant behavior, interface, data-flow,
+  compatibility, or documentation effects. Name symbols when they clarify the
+  change, but do not substitute a symbol inventory for an explanation.
+- Use this descriptive format for all files. Do not include fenced diffs,
+  implementation code dumps, hunk-by-hunk sections, line-range headings, or
+  per-file or per-hunk line counts. Keep line totals in `## Summary` only.
+- For test changes, identify tests added, changed, or removed and describe their
+  assertions and coverage. Explain changes to setup, mocks, builders, or helpers
+  and the scenarios they affect. For removed tests, explain the reason and any
+  replacement coverage or remaining gap. Include test changes in the same file
+  description when a source file contains both production code and tests.
+- Describe the purpose and relevant effects of new files, deletions, renames,
+  permission changes, documentation, generated files, lockfiles, dependency
+  metadata, and binary assets. Scale detail to the change; do not reproduce
+  generated or binary content.
+- Immediately before finalizing the record, inspect the complete implementation
+  changes against `HEAD`, including staged, unstaged, and untracked files.
+  Exclude the implementation record itself and unrelated changes. Verify that
+  every in-scope file appears once in `## Changes`, its description accurately
+  covers the completed changes, and summary totals and file lists agree with
+  the inspected changes. Correct missing descriptions or coverage details
+  before calling the record complete.
 - In `## Tests`, include a brief verification summary plus result bullets for
   automated and manual checks. For checks that were not run, write `Not run`
   with the reason instead of leaving unchecked todo items.

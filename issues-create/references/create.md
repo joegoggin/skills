@@ -11,6 +11,14 @@ conventions:
 
 ## Creation Conventions
 
+When `$plan-project` supplies technical sub-issue specs, preserve its supplied
+body structure, interface snippets, numbered implementation sequence, acceptance
+criteria, and verification sections. For those bodies only, this exception takes
+precedence over the default sub-issue format and restrictions below, including
+the required `Expected Result` heading and prohibition on numbered steps. All
+project, metadata, assignment, creation, and relationship rules still apply.
+Ordinary `$issues-create` requests continue to use the default format.
+
 - Give all new issues a status of `Todo`.
 - If a priority is not provided, set the priority to `Medium` by default.
 - Create a main issue with a summary of the full task that needs to be completed.

@@ -1,6 +1,6 @@
 ---
 name: issues-update
-description: Update or sync existing GitHub issue bodies. Use when Codex is asked to update issue body text, sync issue bodies with current plans, normalize main or sub-issue bodies, refresh stale GitHub issues, or convert old issue step checklists into expected-result issue body structure.
+description: Update or sync existing GitHub issue bodies. Use when Codex is asked to update issue body text, sync issue bodies with current plans, normalize main or sub-issue bodies, refresh stale GitHub issues, or convert sub-issue bodies into technical specs with file changes, interfaces, and verification.
 ---
 
 # Update GitHub Issues
@@ -8,9 +8,11 @@ description: Update or sync existing GitHub issue bodies. Use when Codex is aske
 ## Workflow
 
 Read `references/update.md` before updating GitHub issue bodies.
-When normalizing main or sub-issue bodies, also read the sibling
-`../issues-create/references/create.md` reference for the canonical issue body
-structures.
+When normalizing main issues, also read
+[the main issue format](../issues-create/references/create.md).
+When normalizing sub-issues, read
+[the technical spec format](../plan-project/references/sub-issue-spec.md)
+and use it instead of the default `$issues-create` sub-issue template.
 
 Before updating GitHub issues, read the repo's `AGENTS.md` and locate the
 GitHub project for the repo when project status, priority, labels, or issue
